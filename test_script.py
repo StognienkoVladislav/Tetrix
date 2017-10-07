@@ -24,17 +24,26 @@ print(df[1:]['attribute_value'].value_counts())
 lst = df[1:]['attribute_name'].unique()
 ss = {}
 
-lst2 = df[1:][['attribute_name', 'id']]
+lst2 = df[1:][['attribute_name', 'attribute_value']]
 
 print(lst2.sort_values(by='attribute_name'))
 
 lst3 = {}
 i=0
-for x, y in zip(lst2["attribute_name"], lst2["id"]):
-    #print(x)
-    #print(y)
 
-    if x == 'Страна производитель':
-        lst3['Страна производитель'].add(y)
+for x in lst2["attribute_name"].unique():
+    lst3[x] = {}
+
+for x, y in zip(lst2["attribute_name"].unique(), df[1:]["attribute_value"]):
+
+    for z in df[1:]["attribute_name"]:
+        if x == z:
+            if y in lst3[x]:
+                lst3[x][y] += 1
+            else:
+                lst3[x][y] = 1
+
 
 print(lst3)
+
+print("HUI")
